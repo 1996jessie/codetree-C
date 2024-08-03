@@ -8,5 +8,4 @@ int main() {
     
     printf("%s\n%s", t, s);
     return 0;
-
 }
