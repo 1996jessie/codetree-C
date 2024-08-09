@@ -10,7 +10,7 @@ int main() {
     } else if(am < bm) {
         printf("B");
     } else {
-        if(ae > be) {
+        if(ae >= be) {
             printf("A");
         } else {
             printf("B");
