@@ -5,9 +5,9 @@ int main() {
     int am, ae, bm, be;
     scanf("%d %d\n", &am, &ae);
     scanf("%d %d\n", &bm, &be);
-    if(am >= bm) {
+    if(am > bm) {
         printf("A");
-    } else if(am <= bm) {
+    } else if(am < bm) {
         printf("B");
     } else {
         if(ae >= be) {
