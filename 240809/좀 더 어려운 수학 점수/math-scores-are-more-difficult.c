@@ -7,7 +7,7 @@ int main() {
     scanf("%d %d\n", &bm, &be);
     if(am >= bm) {
         printf("A");
-    } else if(am < bm) {
+    } else if(am <= bm) {
         printf("B");
     } else {
         if(ae >= be) {
