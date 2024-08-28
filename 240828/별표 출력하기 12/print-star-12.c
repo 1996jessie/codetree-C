@@ -11,20 +11,15 @@ int main() {
                 printf("* ");
             }
             printf("\n");
-        } else if (i % 2 == 0) {
-            for (int j = 1; j <= (i / 2); j++) {
+        } else {
+            for (int j = 1; j < i; j++) {
                 printf("  ");
             }
-            for (int j = 1; j <= (n - i / 2); j++) {
+            for (int j = i; j <= n; j++) {
                 printf("* ");
                 j++;
             }
             printf("\n");
-        } else {
-            for (int j = 1; j <= (i / 2); j++) {
-                printf("  ");
-            }
-            printf("*\n");
         }
     }
 
