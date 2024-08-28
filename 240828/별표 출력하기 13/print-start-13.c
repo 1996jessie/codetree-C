@@ -10,6 +10,7 @@ int main() {
             for (int j = 0; j < n - (i / 2); j++) {
                 printf("* ");
             }
+        } else {  
             for (int j = 0; j < i / 2; j++) {
                 printf("* ");
             }
