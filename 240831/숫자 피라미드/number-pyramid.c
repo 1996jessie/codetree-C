@@ -5,15 +5,14 @@ int main() {
     int n;
     scanf("%d", &n);
 
-    // 1부터 n까지의 숫자에 대해 해당 숫자를 i번 출력하는 루프
-    for (int i = 1; i <= n; i++) {  // 1부터 n까지 반복
-        for (int j = 1; j <= i; j++) {  // 각 숫자를 i번 출력
+    for (int i = 1; i <= n; i++) {  
+        for (int j = 1; j <= i; j++) {  
             printf("%d", i);
             if (j < i) {
-                printf(" ");  // 마지막 숫자 뒤에는 공백 추가하지 않음
+                printf(" ");  
             }
         }
-        printf("\n");  // 각 줄 출력 후 줄 바꿈
+        printf("\n");
     }
 
     return 0;
