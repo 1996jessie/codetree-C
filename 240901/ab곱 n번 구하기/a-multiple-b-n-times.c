@@ -9,7 +9,7 @@ int main() {
         int a, b;
         scanf("%d %d", &a, &b); 
 
-        long long p = 1;
+        int p = 1;
         for (int j = a; j <= b; j++) {
             p *= j;  
         }
