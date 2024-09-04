@@ -18,9 +18,9 @@ int main() {
         sum += numbers[i];
     }
 
-    double average = (double)sum / count;
+    double avg = (double)sum / count;
 
-    printf("%d %.1f\n", sum, average);
+    printf("%d %.1f\n", sum, avg);
 
     return 0;
 }
