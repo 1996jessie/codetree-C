@@ -26,7 +26,7 @@ int main() {
         }
     }
 
-    printf("%d\n", pass_count);
+    printf("%d\n", count);
 
     return 0;
 }
