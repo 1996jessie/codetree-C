@@ -13,7 +13,7 @@ int main() {
         }
         if (a % 2 == 0) {
             count++;  
-            sum += number; 
+            sum += a; 
         }
     }
 
