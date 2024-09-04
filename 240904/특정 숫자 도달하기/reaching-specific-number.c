@@ -15,7 +15,7 @@ int main() {
     }
 
     for (int i = 0; i < count; i++) {
-        sum += numbers[i];
+        sum += arr[i];
     }
 
     double avg = (double)sum / count;
