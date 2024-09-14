@@ -3,62 +3,35 @@
 int main() {
     // 여기에 코드를 작성해주세요.
     int n;
+    int answer[10][10] = {0,};
+
+    // 입력
     scanf("%d", &n);
-
-    int number = 0;
-    int graph[n][n];
-
-    // Initialize the graph with zeros
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            graph[i][j] = 0;
-        }
-    }
-
-    if (n % 2 == 0) {
-        for (int i = 0; i < n; i++) {
-            int adjusted_i = n - i;
-            if (adjusted_i % 2 == 0) {
-                for (int j = 0; j < n; j++) {
-                    int adjusted_j = n - j;
-                    number++;
-                    graph[adjusted_j - 1][adjusted_i - 1] = number;
-                }
-            } else {
-                for (int k = 0; k < n; k++) {
-                    number++;
-                    graph[k][adjusted_i - 1] = number;
-                }
+    
+    // 격자를 채워줍니다.
+    int count = 1;
+    for(int col = n - 1; col >= 0; col--) {
+        if ((n - 1 - col) % 2 == 0){
+            // 이 케이스에는 아래에서 위로 값을 채워줍니다.
+            for(int row = n - 1; row >= 0; row--){
+                answer[row][col] = count;
+                count++;
             }
         }
-    } else {
-        for (int i = 0; i < n; i++) {
-            int adjusted_i = n - i;
-            if (adjusted_i % 2 == 0) {
-                for (int k = 0; k < n; k++) {
-                    number++;
-                    graph[k][adjusted_i - 1] = number;
-                }
-            } else {
-                for (int j = 0; j < n; j++) {
-                    int adjusted_j = n - j;
-                    number++;
-                    graph[adjusted_j - 1][adjusted_i - 1] = number;
-                }
+        else {
+            // 이 케이스에는 위에서 아래로 값을 채워줍니다.
+            for(int row = 0; row < n; row++){
+                answer[row][col] = count;
+                count++;
             }
         }
     }
-
-    // Print the graph
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (j > 0) {
-                printf(" ");
-            }
-            printf("%d", graph[i][j]);
-        }
+    
+    // 출력:
+    for(int row = 0; row < n; row++) {
+        for(int col = 0; col < n; col++) 
+            printf("%d ", answer[row][col]);
         printf("\n");
     }
-
     return 0;
 }
