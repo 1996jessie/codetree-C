@@ -1,35 +1,43 @@
 #include <stdio.h>
 #include <string.h>
 
+char str_a[1001];
+char ans[2001];
+int len_a;
+int cnt;
+
 int main() {
-    // 여기에 코드를 작성해주세요.
-    char str[1001]; 
-    scanf("%s", str); 
+    scanf("%s", str_a);
 
-    int len = strlen(str);  
-    int count = 1;
-    char arr[2001];
-    int index = 0; 
+    len_a = strlen(str_a);
 
-    for (int i = 1; i <= len; i++) {
-        if (str[i] == str[i - 1]) {
-            count++; 
-        } else {
-            arr[index++] = str[i - 1];  
+    char curr_char = str_a[0];
+    int num_char = 1;
+    for(int i = 1; i < len_a; i++){
+        if(str_a[i] == curr_char){
+            num_char++;
+        }
+        else {
+            ans[cnt++] = curr_char;
 
-            if (count >= 10) {
-                arr[index++] = (count / 10) + '0'; 
-            }
-            arr[index++] = (count % 10) + '0';
+            char mystr[10];
+            sprintf(mystr, "%d", num_char);
+            strcat(ans, mystr);
+            cnt = strlen(ans);
 
-            count = 1; 
+            curr_char = str_a[i];
+            num_char = 1;
         }
     }
 
-    arr[index] = '\0'; 
+    ans[cnt++] = curr_char;
 
-    printf("%d\n", strlen(arr));
-    printf("%s\n", arr);
+    char mystr[10];
+    sprintf(mystr, "%d", num_char);
+    strcat(ans, mystr);
+    cnt = strlen(ans);
+
+    printf("%d\n%s", cnt, ans);
 
     return 0;
 }
