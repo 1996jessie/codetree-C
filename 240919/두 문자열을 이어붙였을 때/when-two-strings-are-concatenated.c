@@ -1,49 +1,40 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    char A[101], B[101];
-    char AB[201], BA[201];  
-    int a_len = 0, b_len = 0, i, j;
+    char a[101], b[101];
+    char c[201] = {0,}, d[201] = {0,};
+	
+	scanf("%s", a);
+    scanf("%s", b);
 
-    scanf("%s", A);
-    scanf("%s", B);
-
-    while (A[a_len] != '\0') {
-        a_len++;
-    }
-
-    while (B[b_len] != '\0') {
-        b_len++;
-    }
-
-    for (i = 0; i < a_len; i++) {
-        AB[i] = A[i];
-    }
-    for (j = 0; j < b_len; j++) {
-        AB[i + j] = B[j];
-    }
-    AB[i + j] = '\0';  
-
-    for (i = 0; i < b_len; i++) {
-        BA[i] = B[i];
-    }
-    for (j = 0; j < a_len; j++) {
-        BA[i + j] = A[j];
-    }
-    BA[i + j] = '\0'; 
-
-    i = 0;
-    while (AB[i] != '\0' && BA[i] != '\0') {
-        if (AB[i] != BA[i]) {
-            printf("false\n");
-            return 0;
-        }
-        i++;
-    }
-
-    printf("true\n");
-
+	int a_len = strlen(a);
+	int b_len = strlen(b);
+	
+    for(int i = 0; a[i] != '\0'; i++)
+        c[i] = a[i];
+    for(int i = 0; b[i] != '\0'; i++)
+        c[a_len + i] = b[i];
+    
+    c[a_len + b_len] = '\0';
+	
+    for(int i = 0; b[i] != '\0'; i++)
+        d[i] = b[i];
+    for(int i = 0; a[i] != '\0'; i++)
+        d[b_len + i] = a[i];
+    
+    d[a_len + b_len] = '\0';
+    
+    bool satisfied = true;
+    for(int i = 0; c[i] != '\0'; i++)
+        if(c[i] != d[i]) satisfied = false;
+	
+	if(satisfied)
+        printf("true");
+    else
+        printf("false");
+	
     return 0;
 }
