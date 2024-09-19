@@ -20,21 +20,29 @@ int main() {
     
     c[a_len + b_len] = '\0';
 	
-    for(int i = 0; b[i] != '\0'; i++)
+    for(int i = 0; b[i] != '\0'; i++) {
         d[i] = b[i];
-    for(int i = 0; a[i] != '\0'; i++)
+    }
+
+    for(int i = 0; a[i] != '\0'; i++) {
         d[b_len + i] = a[i];
-    
+    }
+
     d[a_len + b_len] = '\0';
     
     bool satisfied = true;
-    for(int i = 0; c[i] != '\0'; i++)
-        if(c[i] != d[i]) satisfied = false;
-	
-	if(satisfied)
+    for(int i = 0; c[i] != '\0'; i++) {
+        if(c[i] != d[i]) {
+            satisfied = false; 
+        }
+    }
+        
+	if(satisfied) {
         printf("true");
-    else
+    } else {
         printf("false");
+    }
+
 	
     return 0;
 }
