@@ -5,21 +5,30 @@ int main() {
     int n;
     scanf("%d", &n);
 
-    int sum = 0;
-
+    int sum = 0; 
     for (int i = 0; i < n; i++) {
         int num;
-        scanf("%d", &num);
-        sum += num;
+        scanf("%d", &num); 
+        sum += num; 
     }
 
-    int shiftedSum = sum / 10; 
-    int remainder = sum % 10; 
+    char result[20]; 
+    sprintf(result, "%lld", sum);
 
-    char result[20];
-    sprintf(result, "%d%d", shiftedSum, remainder);
+    char shifted[20];
+    int i = 0;
 
-    printf("%s\n", result);
+    char temp = result[0];
+
+    while (result[i + 1] != '\0') {
+        shifted[i] = result[i + 1]; 
+        i++;
+    }
+
+    shifted[i] = temp; 
+    shifted[i + 1] = '\0'; 
+
+    printf("%s\n", shifted);
 
     return 0;
 }
