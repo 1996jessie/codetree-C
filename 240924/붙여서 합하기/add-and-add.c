@@ -1,43 +1,38 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    char A[10], B[10];
-    scanf("%s %s", A, B);
+    char a[5];
+	char b[5];
+	char str1[7];
+	char str2[7];
+	
+	scanf("%s", a);
+	scanf("%s", b);
+	
+	int len_a = strlen(a);
+	int len_b = strlen(b);
+	int tot_idx1 = 0;
+	int tot_idx2 = 0;
 
-    char AB[20], BA[20];
+	for(int i = 0; i < len_a; i++)
+		str1[tot_idx1++] = a[i];
+	
+	for(int i = 0; i < len_b; i++)
+		str1[tot_idx1++] = b[i];
+	
+	for(int i = 0; i < len_b; i++)
+		str2[tot_idx2++] = b[i];
+	
+	for(int i = 0; i < len_a; i++)
+		str2[tot_idx2++] = a[i];
 
-    int i = 0, j = 0;
-    while (A[i] != '\0') {
-        AB[j++] = A[i++];
-    }
-
-    i = 0;
-    while (B[i] != '\0') {
-        AB[j++] = B[i++];
-    }
-    AB[j] = '\0'; 
-
-    i = 0;
-    j = 0;
-
-    while (B[i] != '\0') {
-        BA[j++] = B[i++];
-    }
-
-    i = 0;
-    while (A[i] != '\0') {
-        BA[j++] = A[i++];
-    }
-    BA[j] = '\0'; 
-
-    int num_AB = atoi(AB);
-    int num_BA = atoi(BA);
-
-    int result = num_AB + num_BA;
-
-    printf("%d\n", result);
-
+	int str1_int = atoi(str1);
+	int str2_int = atoi(str2);
+	
+	printf("%d", str1_int + str2_int);
+	
     return 0;
 }
