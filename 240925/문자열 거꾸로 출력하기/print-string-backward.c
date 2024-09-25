@@ -14,9 +14,9 @@ int main() {
 
         int len = strlen(str);
         for (int i = len - 1; i >= 0; i--) {
-            putchar(str[i]); 
+            printf("%c", str[i]); 
         }
-        putchar('\n'); 
+        printf("\n");
     }
 
     return 0;
