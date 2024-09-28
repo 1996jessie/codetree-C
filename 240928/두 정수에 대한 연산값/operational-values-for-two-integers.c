@@ -1,17 +1,13 @@
 #include <stdio.h>
 
-void modify(int a, int b) {
-    int larger, smaller;
-
+void Modify(int a, int b, int *resultA, int *resultB) {
     if (a > b) {
-        larger = a + 25; 
-        smaller = b * 2; 
+        *resultA = a + 25;
+        *resultB = b * 2;  
     } else {
-        larger = b + 25; 
-        smaller = a * 2;
+        *resultA = a * 2; 
+        *resultB = b + 25; 
     }
-
-    printf("%d %d\n", smaller, larger);
 }
 
 int main() {
@@ -19,7 +15,10 @@ int main() {
     int a, b;
     scanf("%d %d", &a, &b);
 
-    modify(a, b);
+    int resultA, resultB; 
+    Modify(a, b, &resultA, &resultB);
+
+    printf("%d %d\n", resultA, resultB);
 
     return 0;
 }
