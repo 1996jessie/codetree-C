@@ -1,13 +1,19 @@
 #include <stdio.h>
 
-void modifyValues(int a, int b, int *newA, int *newB) {
-    if (a < b) {
-        *newA = a + 10;
-        *newB = b * 2;
+void modifyValues(int *a, int *b) {
+    int temp_a = *a;
+    int temp_b = *b;
+
+    if (temp_a < temp_b) {
+        temp_a += 10;
+        temp_b *= 2;
     } else {
-        *newA = b + 10;
-        *newB = a * 2;
+        temp_b += 10;
+        temp_a *= 2;
     }
+
+    *a = temp_a;
+    *b = temp_b;
 }
 
 int main() {
@@ -15,10 +21,9 @@ int main() {
     int a, b;
     scanf("%d %d", &a, &b);
 
-    int modifiedA, modifiedB;
-    modifyValues(a, b, &modifiedA, &modifiedB);
+    modifyValues(&a, &b);
 
-    printf("%d %d\n", modifiedA, modifiedB);
+    printf("%d %d\n", a, b);
 
     return 0;
 }
