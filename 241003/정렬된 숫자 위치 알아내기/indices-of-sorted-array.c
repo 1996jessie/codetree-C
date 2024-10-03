@@ -1,54 +1,52 @@
 #include <stdio.h>
 
-struct Element {
+struct Number {
     int value;
     int index;
 };
 
-void swap(struct Element *a, struct Element *b) {
-    struct Element temp = *a;
-    *a = *b;
-    *b = temp;
-}
+void bubbleSort(struct Number arr[], int n) {
+    int i, j;
+    struct Number temp;
 
-void selectionSort(struct Element arr[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        int minIdx = i;
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j].value < arr[minIdx].value) {
-                minIdx = j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j].value > arr[j + 1].value || 
+               (arr[j].value == arr[j + 1].value && arr[j].index > arr[j + 1].index)) {
+                // Swap arr[j] and arr[j + 1]
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
-        }
-        if (minIdx != i) {
-            swap(&arr[i], &arr[minIdx]);
         }
     }
 }
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int N;
+    int n, i;
+    struct Number numbers[1000];
+    int result[1000];
 
-    scanf("%d", &N);
-    
-    struct Element arr[N]; 
-
-    for (int i = 0; i < N; i++) {
-        scanf("%d", &arr[i].value);
-        arr[i].index = i; 
+    // 입력
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &numbers[i].value);
+        numbers[i].index = i; // 원래 인덱스를 저장
     }
 
-    int result[N];
+    // 정렬
+    bubbleSort(numbers, n);
 
-    selectionSort(arr, N);
-
-    for (int i = 0; i < N; i++) {
-        result[arr[i].index] = i + 1; 
+    // 결과 배열에 이동한 위치 저장
+    for (i = 0; i < n; i++) {
+        result[numbers[i].index] = i + 1; // 인덱스 보정
     }
-    
-    for (int i = 0; i < N; i++) {
+
+    // 출력
+    for (i = 0; i < n; i++) {
         printf("%d ", result[i]);
     }
-    
+
     return 0;
 }
