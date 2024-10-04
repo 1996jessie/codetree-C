@@ -3,27 +3,26 @@
 int main() {
     // 여기에 코드를 작성해주세요.
     int n;
-    scanf("%d", &n);
+    int x1[100], x2[100];
+    int checked[201] = {0};
 
-    int start[100], end[100];
-    
-    for (int i = 0; i < n; i++) {
-        scanf("%d %d", &start[i], &end[i]);
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++) {
+        scanf("%d %d", &x1[i], &x2[i]);
+
+        x1[i] += 100; 
+        x2[i] += 100; 
     }
     
-    int max_overlap = 0; 
-    for (int i = -100; i < 100; i++) {
-        int current_overlap = 0; 
-        for (int j = 0; j < n; j++) {
-            if (start[j] < i && end[j] > i) {
-                current_overlap++;
-            }
-        }
-        if (current_overlap > max_overlap) {
-            max_overlap = current_overlap;
-        }
-    }
+    for(int i = 0; i < n; i++)
+        for(int j = x1[i]; j < x2[i]; j++)
+            checked[j]++;
+
+    int max = 0;
+    for(int i = 0; i <= 200; i++)
+        if(checked[i] > max)
+            max = checked[i];
     
-    printf("%d\n", max_overlap);
+    printf("%d\n", max);
     return 0;
 }
