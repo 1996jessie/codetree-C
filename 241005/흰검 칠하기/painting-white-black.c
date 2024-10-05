@@ -1,65 +1,56 @@
 #include <stdio.h>
 
-#define OFFSET 1000 // 타일의 인덱스를 음수로부터 보호하기 위한 오프셋
-#define MAX_TILE 2001 // 타일 범위 (-1000부터 1000까지)
+#define MAX_K 100000
 
-int tiles[MAX_TILE]; // 각 타일의 상태를 저장하는 배열
-// 0: 아직 칠해지지 않음, 1: 흰색, 2: 검은색, 3: 회색
+int n;
+int a[2 * MAX_K + 1];
+int cnt_b[2 * MAX_K + 1];
+int cnt_w[2 * MAX_K + 1];
+int b = 0, w = 0, g = 0;
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int n; // 명령의 개수
-    scanf("%d", &n);
-    
-    int cur = OFFSET; // 현재 위치, 시작점은 OFFSET으로 설정
-    
-    for(int i = 0; i < n; i++) {
-        int distance;
-        char direction;
-        scanf("%d %c", &distance, &direction);
-        
-        if(direction == 'L') {
-            // 왼쪽으로 이동하며 타일을 흰색으로 칠합니다.
-            for(int j = 0; j < distance; j++) {
-                // 현재 위치 타일 포함
-                if(tiles[cur - j] == 2) {
-                    // 검은색 타일에 흰색을 덧칠하면 회색으로 변경
-                    tiles[cur - j] = 3;
-                } else if(tiles[cur - j] == 0) {
-                    // 아직 칠해지지 않은 경우 흰색으로 칠함
-                    tiles[cur - j] = 1;
-                }
-                // 흰색 타일은 그대로 흰색
+        scanf("%d", &n);
+
+    int cur = MAX_K;  // 타일의 초기 위치
+
+    for (int i = 1; i <= n; i++) {
+        int x;
+        char c;
+        scanf("%d %c", &x, &c);
+
+        if (c == 'L') {
+            // x칸 왼쪽으로 칠합니다.
+            while (x--) {
+                a[cur] = 1;
+                cnt_w[cur]++;
+                if (x) cur--;  // 현재 위치 갱신
             }
-            cur -= (distance - 1); // 마지막 칠한 타일 위치로 이동
-        } else if(direction == 'R') {
-            // 오른쪽으로 이동하며 타일을 검은색으로 칠합니다.
-            for(int j = 0; j < distance; j++) {
-                // 현재 위치 타일 포함
-                if(tiles[cur + j] == 1) {
-                    // 흰색 타일에 검은색을 덧칠하면 회색으로 변경
-                    tiles[cur + j] = 3;
-                } else if(tiles[cur + j] == 0) {
-                    // 아직 칠해지지 않은 경우 검은색으로 칠함
-                    tiles[cur + j] = 2;
-                }
-                // 검은색 타일은 그대로 검은색
+        } else {
+            // x칸 오른쪽으로 칠합니다.
+            while (x--) {
+                a[cur] = 2;
+                cnt_b[cur]++;
+                if (x) cur++;  // 현재 위치 갱신
             }
-            cur += (distance - 1); // 마지막 칠한 타일 위치로 이동
         }
     }
-    
-    int white_count = 0, black_count = 0, gray_count = 0;
-    
-    // 타일의 상태를 확인하고, 각각의 색상 카운트를 증가시킵니다.
-    for(int i = 0; i < MAX_TILE; i++) {
-        if(tiles[i] == 1) white_count++;
-        else if(tiles[i] == 2) black_count++;
-        else if(tiles[i] == 3) gray_count++;
+
+    for (int i = 0; i <= 2 * MAX_K; i++) {
+        // 검은색과 흰색으로 두 번 이상 칠해진 타일은 회색입니다.
+        if (cnt_b[i] >= 2 && cnt_w[i] >= 2) {
+            g++;
+        }
+        // 그렇지 않으면 현재 칠해진 색깔이 곧 타일의 색깔입니다.
+        else if (a[i] == 1) {
+            w++;
+        } else if (a[i] == 2) {
+            b++;
+        }
     }
-    
-    // 결과 출력
-    printf("%d %d %d\n", white_count, black_count, gray_count);
-    
+
+    // 정답을 출력합니다.
+    printf("%d %d %d\n", w, b, g);
+
     return 0;
 }
