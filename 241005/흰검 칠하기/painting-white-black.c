@@ -1,7 +1,8 @@
 #include <stdio.h>
 
+#define MAX_K 100000  
+
 int n;
-int MAX_K = 100000;
 int a[2 * MAX_K + 1];
 int cnt_b[2 * MAX_K + 1];
 int cnt_w[2 * MAX_K + 1];
