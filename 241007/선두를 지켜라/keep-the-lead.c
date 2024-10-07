@@ -18,59 +18,53 @@ int main() {
         scanf("%d %d", &B_vel[i], &B_time[i]);
     }
 
-    // 선두가 바뀐 횟수를 저장할 변수
-    int lead_changes = 0;
+    int lead_changes = 0;  // 선두가 바뀐 횟수
+    int A_dist = 0, B_dist = 0;  // A와 B의 누적 이동 거리
+    int A_idx = 0, B_idx = 0;    // A와 B의 현재 구간 인덱스
+    int A_rem_time = A_time[A_idx], B_rem_time = B_time[B_idx];  // A와 B의 남은 시간
+    int last_lead = 0;  // 0: 동등, 1: A가 선두, -1: B가 선두
 
-    // 누적 이동 거리
-    int A_dist = 0, B_dist = 0;
-    
-    // 현재 시간을 추적
-    int A_idx = 0, B_idx = 0;
-    int A_cur_time = A_time[A_idx], B_cur_time = B_time[B_idx];
-    
-    // 초기 선두: 같은 위치에서 시작하므로 선두 변화는 없다
-    int last_lead = 0; // 0: 동일, 1: A가 선두, -1: B가 선두
-
-    // 이동할 시간 동안 A와 B의 이동 상황을 비교
+    // A와 B가 모든 구간을 처리할 때까지 반복
     while (A_idx < N && B_idx < M) {
-        // 현재 시간에서의 최소 시간을 구해 이만큼 이동
-        int time_move = (A_cur_time < B_cur_time) ? A_cur_time : B_cur_time;
+        // 이번 구간에서 처리할 최소 시간을 구한다
+        int move_time = (A_rem_time < B_rem_time) ? A_rem_time : B_rem_time;
 
-        // A와 B의 이동 거리를 계산
-        A_dist += A_vel[A_idx] * time_move;
-        B_dist += B_vel[B_idx] * time_move;
+        // A와 B가 move_time 동안 이동한 거리를 누적
+        A_dist += A_vel[A_idx] * move_time;
+        B_dist += B_vel[B_idx] * move_time;
 
         // 선두 비교
         if (A_dist > B_dist && last_lead != 1) {
-            lead_changes++;
-            last_lead = 1; // A가 선두
+            lead_changes++;  // A가 앞서게 됨
+            last_lead = 1;
         } else if (B_dist > A_dist && last_lead != -1) {
-            lead_changes++;
-            last_lead = -1; // B가 선두
+            lead_changes++;  // B가 앞서게 됨
+            last_lead = -1;
         }
 
-        // A와 B의 시간 감소
-        A_cur_time -= time_move;
-        B_cur_time -= time_move;
+        // A와 B의 남은 시간에서 move_time 만큼 빼준다
+        A_rem_time -= move_time;
+        B_rem_time -= move_time;
 
-        // A의 시간이 다 소진되면 다음 구간으로 이동
-        if (A_cur_time == 0) {
+        // A의 시간이 다 소진되면 다음 구간으로 넘어감
+        if (A_rem_time == 0) {
             A_idx++;
             if (A_idx < N) {
-                A_cur_time = A_time[A_idx];
+                A_rem_time = A_time[A_idx];
             }
         }
 
-        // B의 시간이 다 소진되면 다음 구간으로 이동
-        if (B_cur_time == 0) {
+        // B의 시간이 다 소진되면 다음 구간으로 넘어감
+        if (B_rem_time == 0) {
             B_idx++;
             if (B_idx < M) {
-                B_cur_time = B_time[B_idx];
+                B_rem_time = B_time[B_idx];
             }
         }
     }
 
     // 결과 출력
     printf("%d\n", lead_changes);
+
     return 0;
 }
