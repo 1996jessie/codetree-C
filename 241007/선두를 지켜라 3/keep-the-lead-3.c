@@ -6,33 +6,30 @@ int main() {
     scanf("%d %d", &n, &m);
 
     int v, t;
-    int A[1000001] = {0}; // A의 이동 정보를 저장할 배열
+    int A[1000001] = {0}; 
     int at = 0;
 
-    // A의 이동 정보 입력 및 위치 업데이트
     for (int i = 0; i < n; i++) {
         scanf("%d %d", &v, &t);
         for (int j = 0; j < t; j++) {
             at += 1;
-            A[at] = A[at - 1] + v; // 현재 시간에서 이동 거리 업데이트
+            A[at] = A[at - 1] + v; 
         }
     }
 
-    int B[1000001] = {0}; // B의 이동 정보를 저장할 배열
+    int B[1000001] = {0}; 
     int bt = 0;
 
-    // B의 이동 정보 입력 및 위치 업데이트
     for (int i = 0; i < m; i++) {
         scanf("%d %d", &v, &t);
         for (int j = 0; j < t; j++) {
             bt += 1;
-            B[bt] = B[bt - 1] + v; // 현재 시간에서 이동 거리 업데이트
+            B[bt] = B[bt - 1] + v; 
         }
     }
 
     int leader = 0, ans = 0;
 
-    // A와 B의 최대 이동 횟수에 맞춰 루프 실행
     for (int i = 1; i <= (at > bt ? at : bt); i++) {
         if (A[i] > B[i]) {
             if (leader != 1)
@@ -49,6 +46,6 @@ int main() {
         }
     }
 
-    printf("%d\n", ans); // 결과 출력
+    printf("%d\n", ans);
     return 0;
 }
