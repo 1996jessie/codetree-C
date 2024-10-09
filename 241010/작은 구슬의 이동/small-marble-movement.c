@@ -1,55 +1,51 @@
 #include <stdio.h>
 
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
+#define ASCII_NUM 128
+#define DIR_NUM 4
+
+int n, t;
+int x, y, dir;
+int mapper[ASCII_NUM];
+
+int dx[DIR_NUM] = {0, 1, -1,  0}; 
+int dy[DIR_NUM] = {1, 0,  0, -1};  
+
+int InRange(int x, int y) {
+    return 0 <= x && x < n && 0 <= y && y < n;
+}
+
+void Simulate() {
+    while(t--) {
+        int nx = x + dx[dir], ny = y + dy[dir];
+        if(InRange(nx, ny)) {
+            x = nx;
+            y = ny;
+        }
+        else
+            dir = 3 - dir;
+    }
+}
+
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int n, t;  // 격자의 크기와 시간
     scanf("%d %d", &n, &t);
 
-    int r, c;  // 구슬의 초기 위치
-    char d;    // 구슬의 초기 방향
-    scanf("%d %d %c", &r, &c, &d);
+    mapper['R'] = 0;
+    mapper['D'] = 1;
+    mapper['U'] = 2;
+    mapper['L'] = 3;
 
-    // 초기 방향 설정
-    int dir;
-    if (d == 'U') dir = UP;
-    else if (d == 'D') dir = DOWN;
-    else if (d == 'L') dir = LEFT;
-    else if (d == 'R') dir = RIGHT;
+    char c_dir;
+    scanf("%d %d %c", &x, &y, &c_dir);
 
-    // 상하좌우 움직임을 위한 배열
-    int dr[4] = {-1, 1, 0, 0};  // 행 이동 (UP, DOWN, LEFT, RIGHT)
-    int dc[4] = {0, 0, -1, 1};  // 열 이동 (UP, DOWN, LEFT, RIGHT)
+    x--; 
+    y--; 
+    dir = mapper[c_dir];
 
-    // t초 동안 구슬을 움직임
-    for (int i = 0; i < t; i++) {
-        // 다음 위치 계산
-        int nr = r + dr[dir];
-        int nc = c + dc[dir];
+    Simulate();
 
-        // 벽에 부딪혔는지 확인
-        if (nr < 1 || nr > n) {  // 행이 범위를 벗어난 경우
-            if (dir == UP) dir = DOWN;
-            else if (dir == DOWN) dir = UP;
-            nr = r + dr[dir];  // 반대 방향으로 다시 움직임
-        }
-        if (nc < 1 || nc > n) {  // 열이 범위를 벗어난 경우
-            if (dir == LEFT) dir = RIGHT;
-            else if (dir == RIGHT) dir = LEFT;
-            nc = c + dc[dir];  // 반대 방향으로 다시 움직임
-        }
-
-        // 구슬의 새로운 위치 갱신
-        r = nr;
-        c = nc;
-    }
-
-    // t초 후 최종 위치 출력
-    printf("%d %d\n", r, c);
-
+    printf("%d %d\n", x + 1, y + 1);
+    
     return 0;
 }
