@@ -1,61 +1,52 @@
 #include <stdio.h>
 
-typedef struct {
-    int position;
-    char flag;
-} Person;
+#define MAX_NUM 100
 
+int n;
+int arr[MAX_NUM + 1];
+
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int N;
-    scanf("%d", &N);
-    
-    Person people[100];
-    
-    for (int i = 0; i < N; i++) {
-        scanf("%d %c", &people[i].position, &people[i].flag);
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int x;
+        char c;
+        scanf("%d %c", &x, &c);
+        
+        if (c == 'G')
+            arr[x] = 1;
+        else
+            arr[x] = 2;
     }
-
-    int max_size = 0;
-
-    for (int i = 0; i < N; i++) {
-        for (int j = i; j < N; j++) {
-            int g_count = 0, h_count = 0;
-            int min_pos = people[i].position;
-            int max_pos = people[i].position;
-
+    
+    int max_len = 0;
+    for (int i = 0; i <= MAX_NUM; i++) {
+        for (int j = i + 1; j <= MAX_NUM; j++) {
+            if (arr[i] == 0 || arr[j] == 0)
+                continue;
+            
+            int cnt_g = 0;
+            int cnt_h = 0;
+            
             for (int k = i; k <= j; k++) {
-                if (people[k].flag == 'G') {
-                    g_count++;
-                } else if (people[k].flag == 'H') {
-                    h_count++;
-                }
-                if (people[k].position < min_pos) {
-                    min_pos = people[k].position;
-                }
-                if (people[k].position > max_pos) {
-                    max_pos = people[k].position;
-                }
+                if (arr[k] == 1)
+                    cnt_g++;
+                if (arr[k] == 2)
+                    cnt_h++;
             }
 
-            if (g_count == 0 || h_count == 0) {
-                int size = max_pos - min_pos;
-                if (size > max_size) {
-                    max_size = size;
-                }
-            }
-
-            if (g_count == h_count && g_count > 0) {
-                int size = max_pos - min_pos;
-                if (size > max_size) {
-                    max_size = size;
-                }
+            if (cnt_g == 0 || cnt_h == 0 || cnt_g == cnt_h) {
+                int len = j - i;
+                max_len = max(max_len, len);
             }
         }
     }
-
-    printf("%d\n", max_size);
-
+                        
+    printf("%d\n", max_len);
+    
     return 0;
 }
