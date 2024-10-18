@@ -1,57 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-#define MAX_N 1000
+struct student {
+    int p; // 선물 가격
+    int s; // 배송비
+};
 
-typedef struct {
-    int price;
-    int shipping;
-} Gift;
-
+// 정렬 기준 함수
 int compare(const void* a, const void* b) {
-    int total_a = ((Gift*)a)->price + ((Gift*)a)->shipping;
-    int total_b = ((Gift*)b)->price + ((Gift*)b)->shipping;
-    return total_a - total_b;
+    struct student* studentA = (struct student*)a;
+    struct student* studentB = (struct student*)b;
+
+    // 선물 가격과 배송비의 합을 기준으로 정렬
+    int totalA = studentA->p + studentA->s;
+    int totalB = studentB->p + studentB->s;
+
+    return totalA - totalB; // 오름차순 정렬
 }
+
 
 int main() {
     // 여기에 코드를 작성해주세요.
     int N, B;
-    Gift gifts[MAX_N];
-
     scanf("%d %d", &N, &B);
+
+    struct student info[1001];
+
+    // 학생 정보 입력
     for (int i = 0; i < N; i++) {
-        scanf("%d %d", &gifts[i].price, &gifts[i].shipping);
+        scanf("%d %d", &info[i].p, &info[i].s);
     }
 
-    qsort(gifts, N, sizeof(Gift), compare);
+    // 학생 정보를 정렬
+    qsort(info, N, sizeof(info[0]), compare);
 
-    int max_students = 0;
+    int maxcnt = 0;
 
+    // 각 학생에 대해 쿠폰 사용
     for (int i = 0; i < N; i++) {
-        int total_cost = 0;
-        int used_coupon = 0;
+        int cnt = 0;
+        int remain = B;
 
+        // 쿠폰을 사용하여 해당 학생의 가격을 절반으로 변경
+        int discountedPrice = info[i].p / 2;
+
+        // 예산 내에서 최대 몇 명의 학생에게 선물을 줄 수 있는지 계산
         for (int j = 0; j < N; j++) {
-            int current_cost;
-            if (j == i) {
-                current_cost = (gifts[j].price / 2) + gifts[j].shipping;
+            int currentPrice = (j == i) ? discountedPrice : info[j].p;
+            int totalCost = currentPrice + info[j].s;
+
+            // 예산이 남아 있는지 확인
+            if (remain >= totalCost) {
+                remain -= totalCost; // 예산에서 비용 차감
+                cnt++; // 선물 가능 학생 수 증가
             } else {
-                current_cost = gifts[j].price + gifts[j].shipping;
+                break; // 예산 초과 시 중단
             }
+        }
 
-            total_cost += current_cost;
-
-            if (total_cost > B) {
-                break;
-            }
-
-            if (j < N) {
-                max_students = (j + 1 > max_students) ? (j + 1) : max_students;
-            }
+        // 최대 학생 수 업데이트
+        if (cnt > maxcnt) {
+            maxcnt = cnt;
         }
     }
 
-    printf("%d\n", max_students);
+    // 결과 출력
+    printf("%d\n", maxcnt);
     return 0;
 }
