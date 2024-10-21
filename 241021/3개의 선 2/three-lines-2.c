@@ -1,43 +1,72 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #define MAX_N 20
+#define MAX_X 10
 
+int n;
 int x[MAX_N], y[MAX_N];
-int N;
-
-int check(int x1, int x2, int y1) {
-    int count_x1 = 0, count_x2 = 0, count_y1 = 0;
-    for (int i = 0; i < N; i++) {
-        if (x[i] == x1)
-            count_x1++;
-        else if (x[i] == x2)
-            count_x2++;
-        else if (y[i] == y1)
-            count_y1++;
-        else
-            return 0; 
-    }
-    return 1;
-}
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    scanf("%d", &N);
-    for (int i = 0; i < N; i++) {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
         scanf("%d %d", &x[i], &y[i]);
     }
 
-    for (int i = 0; i < N; i++) {
-        for (int j = i + 1; j < N; j++) {
-            for (int k = 0; k < N; k++) {
-                if (check(x[i], x[j], y[k])) {
-                    printf("1\n");
-                    return 0;
+    int ans = 0;
+
+    for (int i = 0; i <= MAX_X; i++) {
+        for (int j = 0; j <= MAX_X; j++) {
+            for (int k = 0; k <= MAX_X; k++) {
+                bool success = true;
+                for (int l = 0; l < n; l++) {
+                    if (x[l] == i || x[l] == j || x[l] == k) {
+                        continue;
+                    }
+                    success = false;
+                }
+                if (success) {
+                    ans = 1;
+                }
+
+                success = true;
+                for (int l = 0; l < n; l++) {
+                    if (x[l] == i || x[l] == j || y[l] == k) {
+                        continue;
+                    }
+                    success = false;
+                }
+                if (success) {
+                    ans = 1;
+                }
+
+                success = true;
+                for (int l = 0; l < n; l++) {
+                    if (x[l] == i || y[l] == j || y[l] == k) {
+                        continue;
+                    }
+                    success = false;
+                }
+                if (success) {
+                    ans = 1;
+                }
+
+                success = true;
+                for (int l = 0; l < n; l++) {
+                    if (y[l] == i || y[l] == j || y[l] == k) {
+                        continue;
+                    }
+                    success = false;
+                }
+                if (success) {
+                    ans = 1;
                 }
             }
         }
     }
 
-    printf("0\n");
+    printf("%d\n", ans);
+
     return 0;
 }
