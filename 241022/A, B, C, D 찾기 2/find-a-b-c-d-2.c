@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+#define MAX_A 40
+#define MAX_N 15
+
+int arr[MAX_N];
+
 void bubbleSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - 1 - i; j++) {
@@ -14,25 +19,37 @@ void bubbleSort(int arr[], int n) {
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int values[15];
-
-    for (int i = 0; i < 15; i++) {
-        scanf("%d", &values[i]);
+    for (int i = 0; i < MAX_N; i++) {
+        scanf("%d", &arr[i]);
     }
     
-    // 배열을 정렬합니다. (버블 정렬 사용)
-    bubbleSort(values, 15);
-    
-    // 가장 작은 값은 A입니다.
-    int A = values[0];
-    
-    // A, B, C, D를 구합니다.
-    int B = values[1] - A; // A + B에서 B를 구합니다.
-    int C = values[2] - A; // A + C에서 C를 구합니다.
-    int D = values[3] - A; // A + D에서 D를 구합니다.
-    
-    // 결과를 출력합니다.
-    printf("%d %d %d %d\n", A, B, C, D);
-    
+    for (int a = 1; a <= MAX_A; a++) {
+        for (int b = a; b <= MAX_A; b++) {
+            for (int c = b; c <= MAX_A; c++) {
+                for (int d = c; d <= MAX_A; d++) {
+                    int arr2[MAX_N] = {a, b, c, d, a + b, b + c, c + d, d + a,
+                                       a + c, b + d, a + b + c, a + b + d, a + c + d, b + c + d,
+                                       a + b + c + d};
+
+                    bubbleSort(arr2, MAX_N);
+                    bubbleSort(arr, MAX_N);
+
+                    int issame = 1;
+                    for (int i = 0; i < MAX_N; i++) {
+                        if (arr[i] != arr2[i]) {
+                            issame = 0;
+                            break;
+                        }
+                    }
+                    
+                    if (issame) {
+                        printf("%d %d %d %d\n", a, b, c, d);
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+
     return 0;
 }
