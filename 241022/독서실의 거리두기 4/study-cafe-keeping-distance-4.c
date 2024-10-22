@@ -3,55 +3,50 @@
 
 #define MAX_N 100
 
-int max_min_distance(char seats[], int N) {
-    int distances[MAX_N] = {0};
-    int last_occupied = -1;
+int n;
+char seat[MAX_N + 1];
 
-    for (int i = 0; i < N; i++) {
-        if (seats[i] == '1') {
-            last_occupied = i;
-        } else if (last_occupied != -1) {
-            distances[i] = i - last_occupied;
-        }
-    }
-
-    last_occupied = -1;
-    for (int i = N - 1; i >= 0; i--) {
-        if (seats[i] == '1') {
-            last_occupied = i;
-        } else if (last_occupied != -1) {
-            if (distances[i] == 0) {
-                distances[i] = last_occupied - i;
-            } else {
-                distances[i] = distances[i] < last_occupied - i ? distances[i] : last_occupied - i;
+int MinDist() {
+    int min_dist = n;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (seat[i] == '1' && seat[j] == '1') {
+                int dist = j - i;
+                if (dist < min_dist) {
+                    min_dist = dist;
+                }
             }
         }
     }
-
-    int first_max = -1, second_max = -1;
-    for (int i = 0; i < N; i++) {
-        if (seats[i] == '0') {
-            if (distances[i] > first_max) {
-                second_max = first_max;
-                first_max = distances[i];
-            } else if (distances[i] > second_max) {
-                second_max = distances[i];
-            }
-        }
-    }
-
-    return second_max;
+    return min_dist;
 }
+
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int N;
-    char seats[MAX_N + 1];
-    
-    scanf("%d", &N);
-    scanf("%s", seats);
+    scanf("%d", &n);
+    scanf("%s", seat);
 
-    printf("%d\n", max_min_distance(seats, N));
+    int ans = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (seat[i] == '0' && seat[j] == '0') {
+                seat[i] = '1';
+                seat[j] = '1';
+                
+                int current_min_dist = MinDist();
+                if (current_min_dist > ans) {
+                    ans = current_min_dist;
+                }
+
+                seat[i] = '0';
+                seat[j] = '0';
+            }
+        }
+    }
+
+    printf("%d\n", ans);
 
     return 0;
 }
