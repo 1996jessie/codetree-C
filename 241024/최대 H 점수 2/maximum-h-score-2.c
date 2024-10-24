@@ -26,7 +26,7 @@ int main() {
             }
         }
 
-        if(cnt >= i)//
+        if(cnt >= i)
             ans = i;
     }
 
