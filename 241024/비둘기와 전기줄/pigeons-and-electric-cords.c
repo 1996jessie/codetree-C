@@ -1,26 +1,31 @@
 #include <stdio.h>
 
+#define MAX_N 100
+#define MAX_NUM 10
+#define UNDEFINED -1
+
+int n;
+int pigeon[MAX_N + 1], move_dir[MAX_N + 1];
+int pos[MAX_NUM + 1];
 int main() {
     // 여기에 코드를 작성해주세요.
-    int N;
-    scanf("%d", &N);
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+        scanf("%d %d", &pigeon[i], &move_dir[i]);
 
-    // 비둘기의 위치를 저장할 배열 (0: 왼쪽, 1: 오른쪽)
-    int position[11] = {0}; // 비둘기 번호는 1부터 10까지 사용하므로 배열 크기는 11
+    for (int i = 1; i <= MAX_NUM; i++)
+        pos[i] = UNDEFINED;
 
-    int crossings = 0; // 도로를 건넌 횟수
-
-    for (int i = 0; i < N; i++) {
-        int pigeon, loc;
-        scanf("%d %d", &pigeon, &loc);
-
-        // 현재 비둘기의 위치가 이전 위치와 다르면 길을 건넜다고 판단
-        if (position[pigeon] != loc) {
-            crossings++; 
-            position[pigeon] = loc; 
+    int move_cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (pos[pigeon[i]] == UNDEFINED) {
+            pos[pigeon[i]] = move_dir[i];
+        } else if (pos[pigeon[i]] != move_dir[i]) {
+            pos[pigeon[i]] = move_dir[i];
+            move_cnt++;
         }
     }
 
-    printf("%d\n", crossings);
+    printf("%d\n", move_cnt);
     return 0;
 }
