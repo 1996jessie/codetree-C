@@ -1,35 +1,55 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_N 100
+
+int n;
+int a[MAX_N + 1];
+
+int compare(const void *a, const void *b) {
+    return *(int *)a - *(int *)b;
+}
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int n;
     scanf("%d", &n);
-
-    int numbers[100];
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &numbers[i]);
+    for(int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
     }
-
-    int min = 101, second_min = 101;
-    int second_min_position = -1;
-
-    for (int i = 0; i < n; i++) {
-        if (numbers[i] < min) {
-            second_min = min;
-            min = numbers[i];
-        } else if (numbers[i] > min && numbers[i] < second_min) {
-            second_min = numbers[i];
-            second_min_position = i + 1;
-        }
+    
+    int myarr[MAX_N + 1] = {0};
+    for(int i = 1; i <= n; i++) {
+        myarr[i] = a[i];
     }
-
-    for (int i = 0; i < n; i++) {
-        if (numbers[i] == second_min && (i + 1) != second_min_position) {
-            second_min_position = -1;
+    qsort(myarr + 1, n, sizeof(int), compare);
+    
+    int isexist = 0;
+    int low2 = 0;
+    for(int i = 1; i <= n; i++) {
+        if(myarr[i] != myarr[1]) {
+            low2 = myarr[i];
+            isexist = 1;
             break;
         }
     }
 
-    printf("%d\n", second_min_position);
+    if(isexist == 0) {
+        printf("-1\n");
+        return 0;
+    }
+
+    int ansidx = -1;
+    for(int i = 1; i <= n; i++) {
+        if(a[i] == low2) {
+            if(ansidx != -1) {
+                printf("-1\n");
+                return 0;
+            }
+            ansidx = i;
+        }
+    }
+
+    printf("%d\n", ansidx);
+
     return 0;
 }
