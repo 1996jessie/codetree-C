@@ -5,7 +5,7 @@ int main() {
     // 여기에 코드를 작성해주세요.
     int n;
     int scoreA = 0, scoreB = 0, scoreC = 0;
-    int hallOfFame[3] = {1, 1, 1}; // 처음에는 모두가 명예의 전당에 있음
+    int hallOfFame[3] = {1, 1, 1}; 
     int changes = 0;
 
     scanf("%d", &n);
