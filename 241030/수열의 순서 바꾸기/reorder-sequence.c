@@ -3,29 +3,19 @@
 #define MAX_N 100
 
 int n;
-int arr[MAX_N];
+int blocks[MAX_N];
+
 
 int main() {
     // 여기에 코드를 작성해주세요.
     scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+    for(int i = 0; i < n; i++)
+        scanf("%d", &blocks[i]);
 
-    int longest_seq = 1, current_seq = 1;
-    for (int i = 1; i < n; i++) {
-        if (arr[i] > arr[i - 1]) {
-            current_seq++;
-            if (current_seq > longest_seq) {
-                longest_seq = current_seq;
-            }
-        } else {
-            current_seq = 1;
-        }
-    }
+    int idx = n - 2;
+    while(idx >= 0 && blocks[idx] < blocks[idx + 1])
+        idx--;
 
-    int result = n - longest_seq;
-    printf("%d\n", result);
-
+    printf("%d", idx + 1);
     return 0;
 }
