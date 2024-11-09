@@ -2,32 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 구조체로 동적 배열 정의
 typedef struct {
     int *data;
     int size;
     int capacity;
 } DynamicArray;
 
-// 동적 배열 초기화 함수
 void initArray(DynamicArray *arr, int initialCapacity) {
     arr->data = (int *)malloc(initialCapacity * sizeof(int));
     arr->size = 0;
     arr->capacity = initialCapacity;
 }
 
-// 동적 배열 메모리 해제 함수
 void freeArray(DynamicArray *arr) {
     free(arr->data);
 }
 
-// 배열 크기를 두 배로 늘리는 함수
 void resizeArray(DynamicArray *arr) {
     arr->capacity *= 2;
     arr->data = (int *)realloc(arr->data, arr->capacity * sizeof(int));
 }
 
-// push_back 연산
 void push_back(DynamicArray *arr, int value) {
     if (arr->size == arr->capacity) {
         resizeArray(arr);
@@ -35,24 +30,21 @@ void push_back(DynamicArray *arr, int value) {
     arr->data[arr->size++] = value;
 }
 
-// pop_back 연산
 void pop_back(DynamicArray *arr) {
     if (arr->size > 0) {
         arr->size--;
     }
 }
 
-// size 연산
 int size(DynamicArray *arr) {
     return arr->size;
 }
 
-// get 연산
 int get(DynamicArray *arr, int index) {
     if (index >= 1 && index <= arr->size) {
         return arr->data[index - 1];
     }
-    return -1; // 불가능한 경우는 없다고 가정하므로 여기에는 도달하지 않습니다.
+    return -1; 
 }
 
 
@@ -62,7 +54,7 @@ int main() {
     scanf("%d", &N);
 
     DynamicArray arr;
-    initArray(&arr, 10); // 초기 용량은 10으로 설정
+    initArray(&arr, 10);
 
     for (int i = 0; i < N; i++) {
         char command[20];
