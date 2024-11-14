@@ -1,46 +1,48 @@
 #include <iostream>
-#include <deque>
 #include <string>
+#include <list>
+ 
 using namespace std;
+
+int n, m;
+
+string s;
 
 int main() {
     // 여기에 코드를 작성해주세요.
-    int n, m;
     cin >> n >> m;
-    string initial_bread;
-    cin >> initial_bread;
+    cin >> s;
     
-    deque<char> bread(initial_bread.begin(), initial_bread.end());
-    int position = n;
+    list<char> l;
+    for(int i = 0; i < s.length(); i++)
+        l.push_back(s[i]);  
+    list<char>::iterator it = l.end();
     
-    for (int i = 0; i < m; ++i) {
-        string command;
+    while(m--) { 
+        char command;
         cin >> command;
         
-        if (command == "L") {
-            if (position > 0) {
-                position--;
-            }
-        } else if (command == "R") {
-            if (position < bread.size()) {
-                position++;
-            }
-        } else if (command == "D") {
-            if (position < bread.size()) {
-                bread.erase(bread.begin() + position);
-            }
-        } else if (command == "P") {
-            char new_bread;
-            cin >> new_bread;
-            bread.insert(bread.begin() + position, new_bread);
-            position++;
+        if(command == 'L') {
+            if(it != l.begin())  
+                it--;    
+        } 
+        else if(command == 'R') {
+            if(it != l.end())   
+                it++;       
         }
+        else if(command == 'D') {
+            if(it != l.end())   
+                it = l.erase(it); 
+        }
+        else if(command == 'P') {
+            char c;
+            cin >> c;
+            l.insert(it, c);   
+        }    
     }
     
-    for (char c : bread) {
-        cout << c;
+    for (list<char>::iterator it = l.begin(); it != l.end(); it++) {
+        cout << *it;
     }
-    cout << endl;
-    
-    return 0;
+    return 0;     
 }
