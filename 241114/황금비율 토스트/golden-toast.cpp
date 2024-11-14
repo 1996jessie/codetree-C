@@ -11,9 +11,8 @@ int main() {
     cin >> initial_bread;
     
     deque<char> bread(initial_bread.begin(), initial_bread.end());
-    int position = n;  // 초기 가리키는 위치는 맨 마지막
+    int position = n;
     
-    // 명령어 처리
     for (int i = 0; i < m; ++i) {
         string command;
         cin >> command;
@@ -38,7 +37,6 @@ int main() {
         }
     }
     
-    // 결과 출력
     for (char c : bread) {
         cout << c;
     }
