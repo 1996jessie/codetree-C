@@ -1,14 +1,13 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 int main() {
     // 여기에 코드를 작성해주세요.
     int n;
-    cin >> n;
+    scanf("%d", &n);
 
     int arr[n];
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        scanf("%d", &arr[i]);
     }
 
     for (int i = 0; i < n - 1; i++) {
@@ -26,9 +25,9 @@ int main() {
     }
 
     for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+        printf("%d ", arr[i]);
     }
-    cout << endl;
+    printf("\n");
 
     return 0;
 }
