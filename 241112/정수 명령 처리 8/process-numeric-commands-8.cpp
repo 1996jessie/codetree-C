@@ -1,121 +1,139 @@
-#include <iostream>
-#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct Node {
+typedef struct Node {
     int value;
-    Node* prev;
-    Node* next;
-    Node(int val) : value(val), prev(nullptr), next(nullptr) {}
-};
+    struct Node* prev;
+    struct Node* next;
+} Node;
 
-class DoublyLinkedList {
-private:
+typedef struct DoublyLinkedList {
     Node* head;
     Node* tail;
     int size;
+} DoublyLinkedList;
 
-public:
-    DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+void init_list(DoublyLinkedList* list) {
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+}
 
-    void push_front(int value) {
-        Node* new_node = new Node(value);
-        if (size == 0) {
-            head = tail = new_node;
-        } else {
-            new_node->next = head;
-            head->prev = new_node;
-            head = new_node;
-        }
-        size++;
+void push_front(DoublyLinkedList* list, int value) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    new_node->value = value;
+    new_node->prev = NULL;
+    new_node->next = list->head;
+
+    if (list->size == 0) {
+        list->head = list->tail = new_node;
+    } else {
+        list->head->prev = new_node;
+        list->head = new_node;
+    }
+    list->size++;
+}
+
+void push_back(DoublyLinkedList* list, int value) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    new_node->value = value;
+    new_node->next = NULL;
+    new_node->prev = list->tail;
+
+    if (list->size == 0) {
+        list->head = list->tail = new_node;
+    } else {
+        list->tail->next = new_node;
+        list->tail = new_node;
+    }
+    list->size++;
+}
+
+void pop_front(DoublyLinkedList* list) {
+    if (list->size == 0) return;
+
+    printf("%d\n", list->head->value);
+    Node* temp = list->head;
+
+    if (list->size == 1) {
+        list->head = list->tail = NULL;
+    } else {
+        list->head = list->head->next;
+        list->head->prev = NULL;
     }
 
-    void push_back(int value) {
-        Node* new_node = new Node(value);
-        if (size == 0) {
-            head = tail = new_node;
-        } else {
-            new_node->prev = tail;
-            tail->next = new_node;
-            tail = new_node;
-        }
-        size++;
+    free(temp);
+    list->size--;
+}
+
+void pop_back(DoublyLinkedList* list) {
+    if (list->size == 0) return;
+
+    printf("%d\n", list->tail->value);
+    Node* temp = list->tail;
+
+    if (list->size == 1) {
+        list->head = list->tail = NULL;
+    } else {
+        list->tail = list->tail->prev;
+        list->tail->next = NULL;
     }
 
-    void pop_front() {
-        if (size == 0) return;
-        std::cout << head->value << std::endl;
-        Node* temp = head;
-        if (size == 1) {
-            head = tail = nullptr;
-        } else {
-            head = head->next;
-            head->prev = nullptr;
-        }
-        delete temp;
-        size--;
-    }
+    free(temp);
+    list->size--;
+}
 
-    void pop_back() {
-        if (size == 0) return;
-        std::cout << tail->value << std::endl;
-        Node* temp = tail;
-        if (size == 1) {
-            head = tail = nullptr;
-        } else {
-            tail = tail->prev;
-            tail->next = nullptr;
-        }
-        delete temp;
-        size--;
-    }
+void get_size(const DoublyLinkedList* list) {
+    printf("%d\n", list->size);
+}
 
-    void get_size() const {
-        std::cout << size << std::endl;
-    }
+void is_empty(const DoublyLinkedList* list) {
+    printf("%d\n", list->size == 0 ? 1 : 0);
+}
 
-    void is_empty() const {
-        std::cout << (size == 0 ? 1 : 0) << std::endl;
-    }
+void get_front(const DoublyLinkedList* list) {
+    if (list->size == 0) return;
+    printf("%d\n", list->head->value);
+}
 
-    void get_front() const {
-        if (size == 0) return;
-        std::cout << head->value << std::endl;
-    }
+void get_back(const DoublyLinkedList* list) {
+    if (list->size == 0) return;
+    printf("%d\n", list->tail->value);
+}
 
-    void get_back() const {
-        if (size == 0) return;
-        std::cout << tail->value << std::endl;
-    }
-};
 int main() {
     // 여기에 코드를 작성해주세요.
-    DoublyLinkedList dll;
+    DoublyLinkedList list;
+    init_list(&list);
+
     int N;
-    std::cin >> N;
-    std::cin.ignore();
+    scanf("%d", &N);
+    getchar();
 
-    for (int i = 0; i < N; ++i) {
-        std::string command;
-        std::getline(std::cin, command);
+    for (int i = 0; i < N; i++) {
+        char command[100];
+        fgets(command, sizeof(command), stdin);
+        command[strcspn(command, "\n")] = '\0';
 
-        if (command.substr(0, 10) == "push_front") {
-            int value = std::stoi(command.substr(11));
-            dll.push_front(value);
-        } else if (command.substr(0, 9) == "push_back") {
-            int value = std::stoi(command.substr(10));
-            dll.push_back(value);
-        } else if (command == "pop_front") {
-            dll.pop_front();
-        } else if (command == "pop_back") {
-            dll.pop_back();
-        } else if (command == "size") {
-            dll.get_size();
-        } else if (command == "empty") {
-            dll.is_empty();
-        } else if (command == "front") {
-            dll.get_front();
-        } else if (command == "back") {
-            dll.get_back();
+        if (strncmp(command, "push_front", 10) == 0) {
+            int value = atoi(command + 11);
+            push_front(&list, value);
+        } else if (strncmp(command, "push_back", 9) == 0) {
+            int value = atoi(command + 10);
+            push_back(&list, value);
+        } else if (strcmp(command, "pop_front") == 0) {
+            pop_front(&list);
+        } else if (strcmp(command, "pop_back") == 0) {
+            pop_back(&list);
+        } else if (strcmp(command, "size") == 0) {
+            get_size(&list);
+        } else if (strcmp(command, "empty") == 0) {
+            is_empty(&list);
+        } else if (strcmp(command, "front") == 0) {
+            get_front(&list);
+        } else if (strcmp(command, "back") == 0) {
+            get_back(&list);
         }
     }
 
