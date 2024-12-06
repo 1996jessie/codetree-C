@@ -63,12 +63,12 @@ int main() {
     int N;
     char command[20];
     int value;
-    
+
     scanf("%d", &N);
-    
+
     for (int i = 0; i < N; i++) {
         scanf("%s", command);
-        
+
         if (strcmp(command, "push_front") == 0) {
             scanf("%d", &value);
             push_front(value);
@@ -89,6 +89,6 @@ int main() {
             back_val();
         }
     }
-    
+
     return 0;
 }
