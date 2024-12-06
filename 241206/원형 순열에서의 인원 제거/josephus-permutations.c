@@ -2,33 +2,26 @@
 
 #define MAX 5000
 
+int n, k;
+int queue[MAX];
+int front = 0, back = 0;
+
 int main() {
     // 여기에 코드를 작성해주세요.
-    int N, K;
-    int queue[MAX];
-    int front = 0, back = 0;
+    scanf("%d %d", &n, &k);
 
-    scanf("%d %d", &N, &K);
-
-    for (int i = 0; i < N; i++) {
+    for(int i = 0; i < n; i++) {
         queue[back++] = i + 1;
     }
 
-    int first = 1;
-    while (front < back) {
-        for (int i = 0; i < K - 1; i++) {
+    while(front < back - 1) {
+        for(int i = 0; i < k - 1; i++) {
             queue[back++] = queue[front++];
         }
-
-        if (!first) {
-            printf(" ");
-        }
-        printf("%d", queue[front++]);
-
-        first = 0;
+        printf("%d ", queue[front++]);
     }
 
-    printf("\n");
+    printf("%d\n", queue[front]);
 
     return 0;
 }
